@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Museum Search</title>
+<meta name="description" content="Search the Art Institute of Chicago, Cleveland Museum of Art, the Met and the Rijksmuseum at once.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" type="module"></script>
+</head>
+<body>
+<header class="masthead">
+  <div class="inner">
+    <h1>Museum Search</h1>
+    <p>Search open collections from four museums at once.</p>
+  </div>
+</header>
+
+<main class="inner">
+  <form id="search-form" class="search" role="search" autocomplete="off">
+    <div class="search-row">
+      <label class="visually-hidden" for="q">Keyword</label>
+      <input id="q" name="q" type="search" placeholder="Search titles, artists, subjects…">
+
+      <div class="collections">
+        <button type="button" id="collections-button" class="select-button" aria-haspopup="true" aria-expanded="false" aria-controls="collections-menu">
+          <span id="collections-label">All 4 collections</span>
+          <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+        <fieldset id="collections-menu" class="menu" hidden>
+          <legend class="visually-hidden">Collections to search</legend>
+          <label><input type="checkbox" name="sources" value="aic" checked><span class="dot" data-source="aic"></span>Art Institute of Chicago</label>
+          <label><input type="checkbox" name="sources" value="cma" checked><span class="dot" data-source="cma"></span>Cleveland Museum of Art</label>
+          <label><input type="checkbox" name="sources" value="met" checked><span class="dot" data-source="met"></span>The Metropolitan Museum of Art</label>
+          <label><input type="checkbox" name="sources" value="rijks" checked><span class="dot" data-source="rijks"></span>Rijksmuseum</label>
+          <div class="menu-actions">
+            <button type="button" id="select-all">Select all</button>
+            <button type="button" id="menu-done">Done</button>
+          </div>
+        </fieldset>
+      </div>
+
+      <button type="submit" class="primary">Search</button>
+    </div>
+
+    <details id="filters" class="filters">
+      <summary>Filters <span id="filter-count" class="count" hidden></span></summary>
+      <div class="filter-grid">
+        <label>Artist
+          <input id="artist" name="artist" type="text" placeholder="e.g. Rembrandt">
+        </label>
+        <label>Object type
+          <select id="type" name="type">
+            <option value="">Any type</option>
+            <option value="painting">Painting</option>
+            <option value="sculpture">Sculpture</option>
+            <option value="print">Print</option>
+            <option value="drawing">Drawing</option>
+            <option value="photograph">Photograph</option>
+            <option value="textile">Textile</option>
+            <option value="ceramics">Ceramics</option>
+            <option value="furniture">Furniture</option>
+            <option value="metalwork">Metalwork</option>
+            <option value="glass">Glass</option>
+          </select>
+        </label>
+        <fieldset class="years">
+          <legend>Made between</legend>
+          <label class="visually-hidden" for="dateFrom">From year</label>
+          <input id="dateFrom" name="dateFrom" type="number" inputmode="numeric" placeholder="From" step="1">
+          <span aria-hidden="true">–</span>
+          <label class="visually-hidden" for="dateTo">To year</label>
+          <input id="dateTo" name="dateTo" type="number" inputmode="numeric" placeholder="To" step="1">
+          <small>Use negative years for BCE.</small>
+        </fieldset>
+        <label>Place or culture
+          <input id="place" name="place" type="text" placeholder="e.g. Japan">
+        </label>
+        <label>Material or technique
+          <input id="material" name="material" type="text" placeholder="e.g. oil on canvas">
+        </label>
+        <div class="toggles">
+          <label class="check"><input id="onView" name="onView" type="checkbox"> On view now</label>
+          <label class="check"><input id="openAccess" name="openAccess" type="checkbox" checked> Open-access images only</label>
+        </div>
+      </div>
+      <div class="filter-actions">
+        <button type="button" id="clear-filters">Clear filters</button>
+      </div>
+    </details>
+  </form>
+
+  <section id="status" class="status" aria-live="polite" hidden>
+    <div id="source-chips" class="chips"></div>
+    <details id="translation" class="translation">
+      <summary>How this search was sent to each museum</summary>
+      <div id="translation-body" class="translation-body"></div>
+    </details>
+  </section>
+
+  <section id="welcome" class="welcome">
+    <h2>Try a search</h2>
+    <div class="suggestions">
+      <button type="button" data-q="water lilies">water lilies</button>
+      <button type="button" data-artist="Rembrandt" data-type="print">Rembrandt prints</button>
+      <button type="button" data-q="flowers" data-type="painting" data-from="1880" data-to="1889">Flower paintings, 1880s</button>
+      <button type="button" data-q="vase" data-type="ceramics" data-place="China">Chinese ceramics</button>
+      <button type="button" data-q="portrait" data-onview="1">Portraits on view</button>
+    </div>
+  </section>
+
+  <section id="results" class="grid" aria-label="Results"></section>
+  <p id="empty" class="empty" hidden>No works matched. Try fewer filters or a broader keyword.</p>
+  <div class="more"><button type="button" id="load-more" hidden>Load more</button></div>
+</main>
+
+<dialog id="detail" class="detail" aria-labelledby="detail-title">
+  <form method="dialog"><button class="close" aria-label="Close">×</button></form>
+  <div class="detail-body">
+    <figure><img id="detail-image" alt="" referrerpolicy="no-referrer"></figure>
+    <div class="detail-text">
+      <p id="detail-source" class="eyebrow"></p>
+      <h2 id="detail-title"></h2>
+      <p id="detail-artist" class="artist"></p>
+      <dl id="detail-facts"></dl>
+      <a id="detail-link" class="primary-link" target="_blank" rel="noopener">View on the museum's website</a>
+    </div>
+  </div>
+</dialog>
+
+<footer class="inner footer">
+  <p>Data and images from the <a href="https://api.artic.edu/docs/">Art Institute of Chicago</a>, <a href="https://openaccess-api.clevelandart.org/">Cleveland Museum of Art</a>, <a href="https://metmuseum.github.io/">The Metropolitan Museum of Art</a> and <a href="https://data.rijksmuseum.nl/">Rijksmuseum</a> open-access APIs. Check each work's licence before reusing an image.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "museum-search",
+  "private": true,
+  "description": "Search the Art Institute of Chicago, Cleveland Museum of Art, the Met and the Rijksmuseum at once.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  }
+}
