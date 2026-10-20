@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Museum Search</title>
-<meta name="description" content="Search the Art Institute of Chicago, Cleveland Museum of Art, the Met and the Rijksmuseum at once.">
+<meta name="description" content="Search the Art Institute of Chicago, Cleveland Museum of Art, the Met, the Rijksmuseum and Harvard Art Museums at once.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400&display=swap">
@@ -15,7 +15,7 @@
 <header class="masthead">
   <div class="inner">
     <h1>Museum Search</h1>
-    <p>Search open collections from four museums at once.</p>
+    <p>Search open collections from five museums at once.</p>
   </div>
 </header>
 
@@ -27,15 +27,16 @@
 
       <div class="collections">
         <button type="button" id="collections-button" class="select-button" aria-haspopup="true" aria-expanded="false" aria-controls="collections-menu">
-          <span id="collections-label">All 4 collections</span>
+          <span id="collections-label">All 5 collections</span>
           <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
         </button>
         <fieldset id="collections-menu" class="menu" hidden>
           <legend class="visually-hidden">Collections to search</legend>
-          <label><input type="checkbox" name="sources" value="aic" checked><span class="dot" data-source="aic"></span>Art Institute of Chicago</label>
-          <label><input type="checkbox" name="sources" value="cma" checked><span class="dot" data-source="cma"></span>Cleveland Museum of Art</label>
-          <label><input type="checkbox" name="sources" value="met" checked><span class="dot" data-source="met"></span>The Metropolitan Museum of Art</label>
-          <label><input type="checkbox" name="sources" value="rijks" checked><span class="dot" data-source="rijks"></span>Rijksmuseum</label>
+          <label><input type="checkbox" name="sources" value="aic" checked autocomplete="off"><span class="dot" data-source="aic"></span>Art Institute of Chicago</label>
+          <label><input type="checkbox" name="sources" value="cma" checked autocomplete="off"><span class="dot" data-source="cma"></span>Cleveland Museum of Art</label>
+          <label><input type="checkbox" name="sources" value="met" checked autocomplete="off"><span class="dot" data-source="met"></span>The Metropolitan Museum of Art</label>
+          <label><input type="checkbox" name="sources" value="rijks" checked autocomplete="off"><span class="dot" data-source="rijks"></span>Rijksmuseum</label>
+          <label><input type="checkbox" name="sources" value="ham" checked autocomplete="off"><span class="dot" data-source="ham"></span>Harvard Art Museums</label>
           <div class="menu-actions">
             <button type="button" id="select-all">Select all</button>
             <button type="button" id="menu-done">Done</button>
@@ -53,7 +54,7 @@
           <input id="artist" name="artist" type="text" placeholder="e.g. Rembrandt">
         </label>
         <label>Object type
-          <select id="type" name="type">
+          <select id="type" name="type" autocomplete="off">
             <option value="">Any type</option>
             <option value="painting">Painting</option>
             <option value="sculpture">Sculpture</option>
@@ -83,8 +84,8 @@
           <input id="material" name="material" type="text" placeholder="e.g. oil on canvas">
         </label>
         <div class="toggles">
-          <label class="check"><input id="onView" name="onView" type="checkbox"> On view now</label>
-          <label class="check"><input id="openAccess" name="openAccess" type="checkbox" checked> Open-access images only</label>
+          <label class="check"><input id="onView" name="onView" type="checkbox" autocomplete="off"> On view now</label>
+          <label class="check"><input id="openAccess" name="openAccess" type="checkbox" checked autocomplete="off"> Open-access images only</label>
         </div>
       </div>
       <div class="filter-actions">
@@ -132,7 +133,7 @@
 </dialog>
 
 <footer class="inner footer">
-  <p>Data and images from the <a href="https://api.artic.edu/docs/">Art Institute of Chicago</a>, <a href="https://openaccess-api.clevelandart.org/">Cleveland Museum of Art</a>, <a href="https://metmuseum.github.io/">The Metropolitan Museum of Art</a> and <a href="https://data.rijksmuseum.nl/">Rijksmuseum</a> open-access APIs. Check each work's licence before reusing an image.</p>
+  <p>Data and images from the <a href="https://api.artic.edu/docs/">Art Institute of Chicago</a>, <a href="https://openaccess-api.clevelandart.org/">Cleveland Museum of Art</a>, <a href="https://metmuseum.github.io/">The Metropolitan Museum of Art</a>, <a href="https://data.rijksmuseum.nl/">Rijksmuseum</a> and <a href="https://harvardartmuseums.org/collections/api">Harvard Art Museums</a> APIs. Check each work's licence before reusing an image; Harvard images are for non-commercial use only.</p>
 </footer>
 </body>
 </html>

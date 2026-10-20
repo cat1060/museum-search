@@ -15,6 +15,7 @@
   --cma: #0f6f78;
   --met: #6b3fa0;
   --rijks: #b07a00;
+  --ham: #3f6f2a;
   --display: "Gloock", Georgia, "Times New Roman", serif;
   --body: "Public Sans", "Helvetica Neue", Arial, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
@@ -37,6 +38,7 @@
     --cma: #5cc3cc;
     --met: #b99be3;
     --rijks: #e9b84a;
+    --ham: #93cf6e;
     color-scheme: dark;
   }
 }
@@ -81,6 +83,7 @@ input:focus, select:focus { border-color: var(--accent); }
 [data-source="cma"] { --c: var(--cma); }
 [data-source="met"] { --c: var(--met); }
 [data-source="rijks"] { --c: var(--rijks); }
+[data-source="ham"] { --c: var(--ham); }
 .dot[data-source] { background: var(--c); }
 
 /* Filters */

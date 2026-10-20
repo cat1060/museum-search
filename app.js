@@ -8,6 +8,7 @@ const SOURCES = [
   { id: "cma", name: "Cleveland Museum of Art" },
   { id: "met", name: "The Metropolitan Museum of Art" },
   { id: "rijks", name: "Rijksmuseum" },
+  { id: "ham", name: "Harvard Art Museums" },
 ];
 const sourceName = Object.fromEntries(SOURCES.map((s) => [s.id, s.name]));
 const FILTER_FIELDS = ["artist", "type", "dateFrom", "dateTo", "place", "material"];
@@ -40,7 +41,7 @@ function setMenuOpen(open) {
 function updateCollectionsLabel() {
   const on = boxes().filter((b) => b.checked);
   $("#collections-label").textContent =
-    on.length === SOURCES.length ? "All 4 collections" :
+    on.length === SOURCES.length ? `All ${SOURCES.length} collections` :
     on.length === 1 ? sourceName[on[0].value] :
     `${on.length} collections`;
 }
