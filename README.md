@@ -33,7 +33,7 @@ Every result has the same shape:
 - **Art Institute of Chicago**: Elasticsearch query in the `params` parameter. Its image server rejects requests that send another site as the referrer, so images use `referrerpolicy="no-referrer"`.
 - **Cleveland**: plain query parameters; search returns at most 1,000 results.
 - **The Met**: search returns only IDs, so each object is fetched separately (four at a time). Material and open-access are checked on each object.
-- **Harvard Art Museums**: needs an API key (see below). Most filters are Elasticsearch field queries in `q`. There is no public-domain flag, so "open access" uses `imagepermissionlevel:0` (the image may be displayed). Harvard's terms allow non-commercial use only.
+- **Harvard Art Museums**: needs an API key (see below). Most filters are Elasticsearch field queries in `q`. There is no public-domain flag, so "open access" uses `imagepermissionlevel:0` (the image may be displayed). Harvard's terms allow non-commercial use only. Images use each record's `baseimageurl` with `?width=`. Don't build image URLs from `imageid`: on Harvard Library's image server that number points to a different, unrelated image. The `images.harvardartmuseums.org` IIIF URLs on Harvard's website need a signed cookie and return 403 elsewhere.
 - **Rijksmuseum**: no keyword search (the keyword searches titles), no date ranges (approximated with a `creationDate` wildcard, then checked), and each result is a Linked Art record that has to be parsed.
 
 ## Harvard API key
